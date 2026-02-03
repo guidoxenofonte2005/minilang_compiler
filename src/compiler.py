@@ -13,7 +13,6 @@ if __name__ == "__main__":
 
     try:
         with open(sys.argv[1]) as file:
-            # TODO: LEXER -> PARSER
             print(file.read())
     except FileNotFoundError:
         print(f"Arquivo {sys.argv[1]} não encontrado")
