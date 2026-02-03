@@ -20,9 +20,13 @@ class Lexer:
 
         self._init_reserved_table()
 
+        self.scan_file()
+
     def _init_reserved_table(self):
         # TODO: terminar tabela de palavras reservadas
         self._reserved_table = {
+            "var": Token(TAGS.VAR, "var"),
+            "set": Token(TAGS.SET, "set"),
             "int": Token(TAGS.INTEGER, "int"),
             "real": Token(TAGS.REAL, "real"),
             "bool": Token(TAGS.BOOL, "bool"),
@@ -35,16 +39,27 @@ class Lexer:
     def peek(self) -> str:
         if self._current_position < len(self._source_code):
             return self._source_code[self._current_position]
-        return ''
-    
+        return ""
+
     def _advance_position(self) -> None:
         char: str = self.peek()
-        
-        if char != '':
+
+        if char != "":
             self._current_position += 1
-        
-        if char == '\n':
+
+        if char == "\n":
             self._current_line += 1
-        
+
         return char
 
+    def scan_file(self) -> None:
+        while self.peek().isspace():
+            self._advance_position()
+
+        if self.peek().isalnum():
+            identifier_string = ""
+            while self.peek() and self.peek().isalnum():
+                identifier_string += self._advance_position()
+
+            if identifier_string in self._reserved_table:
+                return self._reserved_table[identifier_string]
