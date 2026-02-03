@@ -1,0 +1,61 @@
+<program>               :=  <statement_group>
+<block>                 :=  "{" <statement_group> "}"
+<statement_group>       :=  <statement><statement_group> | e
+<statement>             :=  <variable-decl> ";"
+                        |   <assignment> ";"
+                        |   <print-statement> ";"
+                        |   <if-statement>
+                        |   <while-statement>
+                        |   <return-statement> ";"
+                        |   <function-decl> ";"
+                        |   <block>
+
+<function-decl>         :=  "def" <identifier> "(" <formal_param_optional> ")" ":" <type> <block>
+
+<formal_param_optional> :=  <formal-param> <formal_param_list> | e
+<formal_param_list>     :=  "," <formal-param> <formal_param_list> | e
+<formal-param>          :=  <identifier> ":" <type>
+
+<while-statement>       :=  "while" "(" <expression> ")" <block>
+<if-statement>          :=  "if" "(" <expression> ")" <block> <else_block>
+<else_block>            :=  "else" <block> | e
+
+<return-statement>      :=  "return" <expression>
+<print-statement>       :=  "print" <expression>
+<type>                  :=  "int" | "real" | "bool" | "void"
+
+<variable-decl>         :=  "var" <identifier> ":" <type> "=" <expression>
+<assignment>            :=  "set" <identifier> "=" <expression>
+
+<expression>            :=  <simple-expression> <relational-expression>
+<relational-expression> :=  <relational-op> <simple-expression> | e
+<simple-expression>     :=  <term> <sum-simple-expression>
+<sum-simple-expression> :=  <additive-op> <term> <sum-simple-expression> | e
+<term>                  :=  <factor> <multiplicative-expr>
+<multiplicative-expr>   :=  <multiplicative-op> <factor> | e
+
+<factor>                :=  <literal>
+                        |   <identifier>
+                        |   <function-call>
+                        |   <sub-expression>
+                        |   <unary>
+
+<unary>                 :=  <operation> <unary-expression>
+<operation>             :=  "+" | "-" | "not"
+<unary-expression>      :=  <expression> <unary-expression> | e
+<sub-expression>        :=  "(" <expression> ")"
+<function-call>         :=  <identifier> "(" <actual-params> ")"
+<actual-params>         :=  <expression> <maybe-expression> | e
+<maybe-expression>      :=  "," <expression> <maybe-expression> | e
+
+<relational-op>         :=  "<" | ">" | "==" | "!=" | "<=" | ">="
+<additive-op>           :=  "+" | "-" | "or"
+<multiplicative-op>     :=  "*" | "/" | "and"
+
+<identifier>            :=  <valid_char> <maybe_valid_char>
+<valid_char>            :=  "_" | <letter>
+<maybe_valid_char>      :=  <valid_char> <maybe_valid_char> | <digit> <maybe_valid_char> | e
+<digit>                 :=  0 | 1 | ... | 9
+<letter>                :=  a | b | ... | z | A | ... | Z
+<literal>               :=  <integer-literal> | "true" | "false"
+<integer-literal>       :=  <digit> <integer-literal> | <digit>
