@@ -1,3 +1,5 @@
+### GRAMÁTICA BNF TRADUZIDA A PARTIR DA EBNF
+
 <program>               :=  <statement_group>
 <block>                 :=  "{" <statement_group> "}"
 <statement_group>       :=  <statement><statement_group> | e
