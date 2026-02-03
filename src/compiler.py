@@ -1,20 +1,22 @@
 import sys
 
+from lexer import Lexer
+
+
 class Compiler:
     def __init__(self, fileName: str) -> None:
-        self.file = fileName
-    
+        with open(fileName) as file:
+            self.lexer = Lexer(file)
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Errado")
+        print("USO CORRETO: python src/compiler.py nome_do_arquivo")
         sys.exit(1)
 
     try:
-        with open(sys.argv[1]) as file:
-            print(file.read())
+        Compiler(sys.argv[1])
     except FileNotFoundError:
         print(f"Arquivo {sys.argv[1]} não encontrado")
     except SyntaxError:
-        pass
+        print("Erro de sintaxe encontrado")
