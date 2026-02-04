@@ -1,2 +1,3 @@
 var x : int = 5;
 var resultado : int = 1;
+var booleano : bool = true;
