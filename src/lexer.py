@@ -23,15 +23,15 @@ class Lexer:
     def _init_reserved_table(self):
         # TODO: terminar tabela de palavras reservadas
         self._reserved_table = {
-            "var": Token(TAGS.VAR, "var"),
-            "set": Token(TAGS.SET, "set"),
-            "int": Token(TAGS.INTEGER, "int"),
-            "real": Token(TAGS.REAL, "real"),
-            "bool": Token(TAGS.BOOL, "bool"),
-            "void": Token(TAGS.VOID, "void"),
-            "true": Token(TAGS.TRUE, "true"),
-            "false": Token(TAGS.FALSE, "false"),
-            "print": Token(TAGS.PRINT, "print"),
+            "var": Token(TAGS.VAR.value, "var"),
+            "set": Token(TAGS.SET.value, "set"),
+            "int": Token(TAGS.INTEGER.value, "int"),
+            "real": Token(TAGS.REAL.value, "real"),
+            "bool": Token(TAGS.BOOL.value, "bool"),
+            "void": Token(TAGS.VOID.value, "void"),
+            "true": Token(TAGS.TRUE.value, "true"),
+            "false": Token(TAGS.FALSE.value, "false"),
+            "print": Token(TAGS.PRINT.value, "print"),
         }
 
     def peek(self, index_advance:int = 0) -> str:
@@ -60,9 +60,9 @@ class Lexer:
         if self.peek().isdigit():
             digit_string: str = ""
             is_decimal: bool = False
-            
-            while self.peek() and (self.peek().isdigit or self.peek() == "."):
-                current_char: str = self.peek()
+
+            while self.peek() and (self.peek().isdigit() or self.peek() == "."):
+                current_char: str = self._advance_position()
                 if current_char == ".":
                     if is_decimal:
                         #TODO criar exception específica depois
@@ -71,8 +71,8 @@ class Lexer:
                 digit_string += current_char
             
             if is_decimal:
-                return Token(TAGS.REAL, digit_string)
-            return Token(TAGS.INTEGER, digit_string)
+                return Token(TAGS.REAL.value, digit_string)
+            return Token(TAGS.INTEGER.value, digit_string)
                 
 
         if self.peek().isalnum():
@@ -83,7 +83,7 @@ class Lexer:
             if identifier_string in self._reserved_table:
                 return self._reserved_table[identifier_string]
 
-            return_token: Token = Token(TAGS.IDENTIFIER, identifier_string)
+            return_token: Token = Token(TAGS.IDENTIFIER.value, identifier_string)
             self.token_table[identifier_string] = return_token
             
             return return_token
