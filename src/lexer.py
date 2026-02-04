@@ -33,6 +33,9 @@ class Lexer:
             "false": Token(TAGS.FALSE.value, "false"),
             "print": Token(TAGS.PRINT.value, "print"),
         }
+    
+    def get_current_line(self) -> int:
+        return self._current_line
 
     def peek(self, index_advance: int = 0) -> str:
         if self._current_position < len(self._source_code):
