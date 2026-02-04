@@ -1,5 +1,6 @@
 from enum import Enum
 
+import lexer
 
 class TAGS(Enum):
     IDENTIFIER = 256
@@ -12,11 +13,11 @@ class TAGS(Enum):
     TYPE = 259
     INTEGER = 260
     REAL = 261
-    BOOL = 262
-    VOID = 263
 
-    TRUE = 264
-    FALSE = 265
+    TRUE = 262
+    FALSE = 263
 
     # basic functions
-    PRINT = 266
+    PRINT = 264
+
+global_lexer: lexer.Lexer = None

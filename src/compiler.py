@@ -6,7 +6,7 @@ from lexer import Lexer
 class Compiler:
     def __init__(self, fileName: str) -> None:
         with open(fileName) as file:
-            self.lexer = Lexer(file)
+            globals.global_lexer = Lexer(file)
 
 
 if __name__ == "__main__":
