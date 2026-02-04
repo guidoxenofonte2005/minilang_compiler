@@ -34,7 +34,7 @@ class Lexer:
             "print": Token(TAGS.PRINT.value, "print"),
         }
 
-    def peek(self, index_advance:int = 0) -> str:
+    def peek(self, index_advance: int = 0) -> str:
         if self._current_position < len(self._source_code):
             return self._source_code[self._current_position + index_advance]
         return ""
@@ -53,7 +53,7 @@ class Lexer:
     def scan_file(self) -> Token:
         if not self.peek():
             return Token(0)
-        
+
         while self.peek().isspace():
             self._advance_position()
 
@@ -65,15 +65,14 @@ class Lexer:
                 current_char: str = self._advance_position()
                 if current_char == ".":
                     if is_decimal:
-                        #TODO criar exception específica depois
+                        # TODO criar exception específica depois
                         break
                     is_decimal = True
                 digit_string += current_char
-            
+
             if is_decimal:
                 return Token(TAGS.REAL.value, digit_string)
             return Token(TAGS.INTEGER.value, digit_string)
-                
 
         if self.peek().isalnum():
             identifier_string: str = ""
@@ -85,10 +84,10 @@ class Lexer:
 
             return_token: Token = Token(TAGS.IDENTIFIER.value, identifier_string)
             self.token_table[identifier_string] = return_token
-            
-            return return_token
-        
-        current_char: str = self.peek()
-        if (current_char):
-            return Token(ord(current_char), current_char)
 
+            return return_token
+
+        current_char: str = self.peek()
+        if current_char:
+            self._advance_position()
+            return Token(ord(current_char), current_char)

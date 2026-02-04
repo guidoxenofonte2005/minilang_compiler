@@ -7,7 +7,6 @@ def test_lexer_scan():
 
         while lex._current_position < len(lex._source_code):
             print(lex.scan_file())
-            lex._advance_position()
         
         for key, value in lex.token_table.items():
             print(f"{key}: {value}")
