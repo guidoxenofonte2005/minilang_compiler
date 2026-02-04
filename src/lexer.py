@@ -6,7 +6,7 @@ class Token:
         self.tag: str = tokenTag
         self.value: any = tokenValue
 
-    def __str__(self):
+    def __repr__(self):
         return f"<{self.tag}, {self.value}>" if self.value != "" else f"<{self.tag}>"
 
 
@@ -68,7 +68,7 @@ class Lexer:
                 current_char: str = self._advance_position()
                 if current_char == ".":
                     if is_decimal:
-                        # TODO criar exception específica depois
+                        # TODO: criar exception específica depois
                         break
                     is_decimal = True
                 digit_string += current_char

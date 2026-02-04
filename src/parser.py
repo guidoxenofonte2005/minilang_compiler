@@ -1,8 +1,7 @@
 from errors.parse_error import ParseError
 
 from lexer import Token
-import globals
-
+from globals import global_lexer, TAGS
 
 class Parser:
     def __init__(self):
@@ -10,11 +9,15 @@ class Parser:
 
     @staticmethod
     def get_current_line() -> int:
-        return globals.global_lexer.get_current_line()
+        return global_lexer.get_current_line()
+    
+    def start(self):
+        self.lookahead = global_lexer.scan_file()
+        return self.program()
 
     def match_tag(self, tag: any) -> bool:
         if self.lookahead.tag == tag:
-            self.lookahead = globals.global_lexer.scan_file()
+            self.lookahead = global_lexer.scan_file()
             return True
         return False
 
@@ -36,26 +39,26 @@ class Parser:
         return statement_group
 
     def statement(self):
-        if self.lookahead.tag == globals.TAGS.VAR.value:
+        if self.lookahead.tag == TAGS.VAR.value:
             pass
 
-        elif self.lookahead.tag == globals.TAGS.SET.value:
+        elif self.lookahead.tag == TAGS.SET.value:
             pass
 
-        elif self.lookahead.tag == globals.TAGS.PRINT.value:
+        elif self.lookahead.tag == TAGS.PRINT.value:
             return 
 
         # TODO: adaptar essas tags depois
-        # elif self.lookahead.tag == globals.TAGS.IF.value:
+        # elif self.lookahead.tag == TAGS.IF.value:
         #     pass
 
-        # elif self.lookahead.tag == globals.TAGS.WHILE.value:
+        # elif self.lookahead.tag == TAGS.WHILE.value:
         #     pass
 
-        # elif self.lookahead.tag == globals.TAGS.RETURN.value:
+        # elif self.lookahead.tag == TAGS.RETURN.value:
         #     pass
 
-        # elif self.lookahead.tag == globals.TAGS.FUNCTION.value:
+        # elif self.lookahead.tag == TAGS.FUNCTION.value:
         #     pass
 
         elif self.lookahead.tag == ord("{"):

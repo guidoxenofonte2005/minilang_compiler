@@ -8,8 +8,7 @@ def test_lexer_scan():
         while lex._current_position < len(lex._source_code):
             print(lex.scan_file())
         
-        for key, value in lex.token_table.items():
-            print(f"{key}: {value}")
+        print(lex.token_table)
 
 if __name__ == "__main__":
     test_lexer_scan()
