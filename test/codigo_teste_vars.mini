@@ -1,3 +1,5 @@
 var x : int = 5 + 3;
 var resultado : real = 1.55;
 var booleano : bool = true;
+
+print booleano;

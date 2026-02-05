@@ -21,11 +21,16 @@ class TAGS(Enum):
     # basic functions
     PRINT = 264
 
+    FUNCTION_CALL = 266
+
 
 class NODE_TYPES(Enum):
     UNKNOWN = 1
     STATEMENT = 2
     EXPRESSION = 3
+    STATEMENTS = 4
+    ASSIGNMENT = 5
+    IDENTIFIER = 6
 
 
 global_lexer: lexer.Lexer = None
