@@ -33,7 +33,7 @@ class Lexer:
             "false": Token(TAGS.FALSE.value, "false"),
             "print": Token(TAGS.PRINT.value, "print"),
         }
-    
+
     def get_current_line(self) -> int:
         return self._current_line
 

@@ -1,17 +1,12 @@
-from enum import Enum
+from globals import NODE_TYPES
 
+from typing import override
 
-class NODE_TYPES(Enum):
-    UNKNOWN = 1
-    STATEMENT = 2
-    EXPRESSION = 3
 
 class Node:
     # TODO: criar classe Node
-    def __init__(self, nodeType: int = NODE_TYPES.VOID):
-        self.node_type = nodeType
+    def __init__(self, node_type = NODE_TYPES.UNKNOWN):
+        self.node_type: NODE_TYPES = node_type
 
-class ProgramNode(Node):
-    # TODO: criar classes dependentes
-    def __init__(self):
-        super().__init__()
+    def ToString(self) -> str:
+        return ""
