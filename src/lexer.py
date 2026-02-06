@@ -31,7 +31,9 @@ class Lexer:
             "void": Token(TAGS.TYPE.value, "void"),
             "true": Token(TAGS.TRUE.value, "true"),
             "false": Token(TAGS.FALSE.value, "false"),
-            "print": Token(TAGS.PRINT.value, "print"),
+            "and": Token(TAGS.AND.value, "and"),
+            "or": Token(TAGS.OR.value, "or"),
+            "not": Token(TAGS.NOT.value, "not"),
         }
 
     def get_current_line(self) -> int:
@@ -60,6 +62,7 @@ class Lexer:
         while self.peek().isspace():
             self._advance_position()
 
+        # numbers
         if self.peek().isdigit():
             digit_string: str = ""
             is_decimal: bool = False
@@ -77,6 +80,7 @@ class Lexer:
                 return Token(TAGS.REAL.value, digit_string)
             return Token(TAGS.INTEGER.value, digit_string)
 
+        # identifiers
         if self.peek().isalnum():
             identifier_string: str = ""
             while self.peek() and self.peek().isalnum():
@@ -90,7 +94,30 @@ class Lexer:
 
             return return_token
 
+        # operators
         current_char: str = self.peek()
+        if (
+            (current_char == "<")
+            and (self._current_position + 1 < len(self._source_code))
+            and self._source_code[self._current_position + 1] == "="
+        ):
+            for i in range(2): self._advance_position()
+            return Token(TAGS.LESSER_EQUAL.value, "<=")
+        if (
+            (current_char == ">")
+            and (self._current_position + 1 < len(self._source_code))
+            and self._source_code[self._current_position + 1] == "="
+        ):
+            for i in range(2): self._advance_position()
+            return Token(TAGS.GREATER_EQUAL.value, ">=")
+        if (
+            (current_char == "=")
+            and (self._current_position + 1 < len(self._source_code))
+            and self._source_code[self._current_position + 1] == "="
+        ):
+            for i in range(2): self._advance_position()
+            return Token(TAGS.EQUAL.value, "==")
         if current_char:
             self._advance_position()
             return Token(ord(current_char), current_char)
+        return Token(0)

@@ -87,8 +87,11 @@ class Parser:
         expression = self.simple_expr()
 
         # TODO: fazer checagem de relational-op
-        # while (self.lookahead.tag == TAGS)
-
+        while (self.lookahead.tag == TAGS.RELATIONAL_OP.value):
+            token = self.lookahead
+            self.match_tag(self.lookahead.tag)
+            right_hand_expr = self.simple_expr()
+            expression = LogicalExpr(token, )
         return expression
 
     def simple_expr(self):
@@ -100,7 +103,8 @@ class Parser:
         simple_expression = self.term()
 
         # TODO: fazer checagem de additive-op
-        # while (self.lookahead.tag == TAGS)
+        while (self.lookahead.tag == TAGS.ADDITIVE_OP.value):
+            pass
 
         return simple_expression
 
@@ -112,7 +116,8 @@ class Parser:
         term = self.factor()
 
         # TODO: fazer checagem de multiplicative-op
-        # while (self.lookahead.tag == TAGS)
+        while (self.lookahead.tag == TAGS.MULTIPLICATIVE_OP):
+            pass
 
         return term
 

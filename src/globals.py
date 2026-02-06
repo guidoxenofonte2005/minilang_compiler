@@ -22,6 +22,20 @@ class TAGS(Enum):
     PRINT = 264
 
     FUNCTION_CALL = 266
+    ADDITIVE_OP = 267
+    MULTIPLICATIVE_OP = 268
+    RELATIONAL_OP = 269
+
+    AND = 270
+    OR = 271
+    NOT = 272
+
+    GREATER_EQUAL = 273
+    LESSER_EQUAL = 274
+    GREATER = 275
+    LESSER = 276
+    EQUAL = 277
+    NOT_EQUAL = 278
 
 
 class NODE_TYPES(Enum):
@@ -31,6 +45,7 @@ class NODE_TYPES(Enum):
     STATEMENTS = 4
     ASSIGNMENT = 5
     IDENTIFIER = 6
+    LOGICAL = 7
 
 
 global_lexer: lexer.Lexer = None

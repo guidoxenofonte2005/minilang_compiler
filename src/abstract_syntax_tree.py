@@ -47,3 +47,13 @@ class VariableDeclaration(Statement):
 class Identifier(Expression):
     def __init__(self, token: Token):
         super().__init__(token, NODE_TYPES.IDENTIFIER)
+
+
+class LogicalExpr(Expression):
+    def __init__(self, token, expression):
+        super().__init__(token, NODE_TYPES.LOGICAL)
+        self.expression = expression
+
+class RelationalExpr(Expression):
+    def __init__(self, token, node_type=NODE_TYPES.EXPRESSION):
+        super().__init__(token, node_type)
