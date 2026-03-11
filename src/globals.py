@@ -20,6 +20,8 @@ class TAGS(Enum):
 
     # basic functions
     PRINT = 264
+    DEF = 265
+   
 
     FUNCTION_CALL = 266
     ADDITIVE_OP = 267
@@ -36,6 +38,18 @@ class TAGS(Enum):
     LESSER = 276
     EQUAL = 277
     NOT_EQUAL = 278
+    
+    #more basic functions
+    IF= 279
+    ELSE = 280
+    WHILE = 281
+    RETURN = 282
+    
+    #strings opcional
+    STRING= 283
+    
+   
+    
 
 
 class NODE_TYPES(Enum):
@@ -48,4 +62,4 @@ class NODE_TYPES(Enum):
     LOGICAL = 7
 
 
-global_lexer: lexer.Lexer = None
+global_lexer: "Lexer" = None ### ajuste para evitar circular import
