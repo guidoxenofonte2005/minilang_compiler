@@ -2,25 +2,25 @@
 
 <program>               :=  <statement_group>
 <block>                 :=  "{" <statement_group> "}"
-<statement_group>       :=  <statement><statement_group> | e
+<statement_group>       :=  <statement><statement_group> | e  ### passo intermediario para representar a repetição ou nulo
 <statement>             :=  <variable-decl> ";"
                         |   <assignment> ";"
                         |   <print-statement> ";"
                         |   <if-statement>
                         |   <while-statement>
                         |   <return-statement> ";"
-                        |   <function-decl> ";"
+                        |   <function-decl> 
                         |   <block>
 
 <function-decl>         :=  "def" <identifier> "(" <formal_param_optional> ")" ":" <type> <block>
 
-<formal_param_optional> :=  <formal-param> <formal_param_list> | e
-<formal_param_list>     :=  "," <formal-param> <formal_param_list> | e
+<formal_param_optional> :=  <formal-param> <formal_param_list> | e ### paaso intermediario para representar um parametro opcional 
+<formal_param_list>     :=  "," <formal-param> <formal_param_list> | e  ### passo intermediario para representar a repetição ou nulo
 <formal-param>          :=  <identifier> ":" <type>
 
 <while-statement>       :=  "while" "(" <expression> ")" <block>
-<if-statement>          :=  "if" "(" <expression> ")" <block> <else_block>
-<else_block>            :=  "else" <block> | e
+<if-statement>          :=  "if" "(" <expression> ")" <block> <else_block> 
+<else_block>            :=  "else" <block> | e ### paaso intermediario para representar um parametro opcional 
 
 <return-statement>      :=  "return" <expression>
 <print-statement>       :=  "print" <expression>
@@ -30,10 +30,12 @@
 <assignment>            :=  "set" <identifier> "=" <expression>
 
 <expression>            :=  <simple-expression> <relational-expression>
-<relational-expression> :=  <relational-op> <simple-expression> | e
+# <relational_expression_list> :=  <relational-op> <simple-expression> <relational_expression_list> | e ### passo intermediario para representar a repetição ou nulo
+<relational-expression> :=  <relational-op> <simple-expression> | e ### faltando a recursão ?
 <simple-expression>     :=  <term> <sum-simple-expression>
 <sum-simple-expression> :=  <additive-op> <term> <sum-simple-expression> | e
 <term>                  :=  <factor> <multiplicative-expr>
+#<term_list>            :=  <multiplicative-op> <factor> <term_list> | e ### passo intermediario para representar a repetição ou nulo
 <multiplicative-expr>   :=  <multiplicative-op> <factor> | e
 
 <factor>                :=  <literal>
@@ -47,8 +49,8 @@
 <unary-expression>      :=  <expression> <unary-expression> | e
 <sub-expression>        :=  "(" <expression> ")"
 <function-call>         :=  <identifier> "(" <actual-params> ")"
-<actual-params>         :=  <expression> <maybe-expression> | e
-<maybe-expression>      :=  "," <expression> <maybe-expression> | e
+<actual-params>         :=  <expression> <maybe-expression> | e ### |e torna opcional para representar o [X] 
+<maybe-expression>      :=  "," <expression> <maybe-expression> | e ### representa a repetição ou nulo para representar o {, X}
 
 <relational-op>         :=  "<" | ">" | "==" | "!=" | "<=" | ">="
 <additive-op>           :=  "+" | "-" | "or"

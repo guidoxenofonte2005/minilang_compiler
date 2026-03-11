@@ -2,7 +2,7 @@ from lexer import Lexer
 
 
 def test_lexer_scan():
-    with open("test/codigo_teste_vars.mini") as file:
+    with open("test/codigo_teste.mini") as file:
         lex = Lexer(file)
 
         while lex._current_position < len(lex._source_code):

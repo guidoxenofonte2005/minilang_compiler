@@ -34,6 +34,13 @@ class Lexer:
             "and": Token(TAGS.AND.value, "and"),
             "or": Token(TAGS.OR.value, "or"),
             "not": Token(TAGS.NOT.value, "not"),
+            "def": Token(TAGS.DEF.value, "def"),
+            "print": Token(TAGS.PRINT.value, "print"),
+            "if": Token(TAGS.IF.value, "if"),  
+            "else": Token(TAGS.ELSE.value, "else"),
+            "while": Token(TAGS.WHILE.value, "while"),
+            "return": Token(TAGS.RETURN.value, "return"),
+
         }
 
     def get_current_line(self) -> int:
@@ -93,7 +100,22 @@ class Lexer:
             self.token_table[identifier_string] = return_token
 
             return return_token
+        # strings
+        if self.peek() == '"':
+            self._advance_position() 
 
+            string_value = ""
+
+            while self.peek() and self.peek() != '"':
+                string_value += self._advance_position()
+
+            if self.peek() != '"':
+                #detecta o erro lexico
+                raise Exception(f"String não fechada na linha {self._current_line}")
+
+            self._advance_position()  
+
+            return Token(TAGS.STRING.value, string_value)
         # operators
         current_char: str = self.peek()
         if (
