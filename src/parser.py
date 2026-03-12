@@ -55,6 +55,7 @@ class Parser:
         """
         if self.lookahead.tag == TAGS.VAR:
             # var <identifier> : <type> = <expression>;
+            # FIXME: acho que tá errado, provavelmente esteja faltando a verificação de tipagem
             left_hand_expr: Identifier = self.identifier()
             if not self.match_tag(ord("=")):
                 raise ParseError(
@@ -89,11 +90,18 @@ class Parser:
             # return <expression>
             pass
         if self.lookahead.tag == TAGS.DEF:
-            # def <identifier> ( <formal_param_optional> ) : <type> <block>
-            # <formal_param_optional> := <formal_param> <formal_param_list> | e
-            # <formal_param_list> := , <formal_param> <formal_param_list> | e
-            # <formal_param> := <identifier> : <type>
-            pass
+            func_identifier = self.identifier()
+            if not self.match(ord("(")):
+                raise ParseError(
+                    f"ERRO NA LINHA {self.get_current_line()}: esperado símbolo '(' para definição de função"
+                )
+            # TODO: implementar verificação de argumentos
+            if not self.match(ord(")")):
+                raise ParseError(
+                    f"ERRO NA LINHA {self.get_current_line()}: esperado símbolo ')' para fechamento de parâmetros"
+                )
+            
+
         if self.lookahead.tag == ord("{"):
             # block = { <statements> }
             pass

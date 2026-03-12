@@ -23,20 +23,18 @@
 <else_block>            :=  "else" <block> | e ### paaso intermediario para representar um parametro opcional 
 
 <return-statement>      :=  "return" <expression>
-<print-statement>       :=  "print" <expression>
+<print-statement>       :=  "print" <string-literal>
 <type>                  :=  "int" | "real" | "bool" | "void"
 
 <variable-decl>         :=  "var" <identifier> ":" <type> "=" <expression>
 <assignment>            :=  "set" <identifier> "=" <expression>
 
 <expression>            :=  <simple-expression> <relational-expression>
-# <relational_expression_list> :=  <relational-op> <simple-expression> <relational_expression_list> | e ### passo intermediario para representar a repetição ou nulo
-<relational-expression> :=  <relational-op> <simple-expression> | e ### faltando a recursão ?
+<relational-expression> :=  <relational-op> <simple-expression> <relational-expression> | e 
 <simple-expression>     :=  <term> <sum-simple-expression>
 <sum-simple-expression> :=  <additive-op> <term> <sum-simple-expression> | e
 <term>                  :=  <factor> <multiplicative-expr>
-#<term_list>            :=  <multiplicative-op> <factor> <term_list> | e ### passo intermediario para representar a repetição ou nulo
-<multiplicative-expr>   :=  <multiplicative-op> <factor> | e
+<multiplicative-expr>   :=  <multiplicative-op> <factor> <multiplicative-expr> | e
 
 <factor>                :=  <literal>
                         |   <identifier>
@@ -59,7 +57,14 @@
 <identifier>            :=  <valid_char> <maybe_valid_char>
 <valid_char>            :=  "_" | <letter>
 <maybe_valid_char>      :=  <valid_char> <maybe_valid_char> | <digit> <maybe_valid_char> | e
-<digit>                 :=  0 | 1 | ... | 9
+<digit>                 :=  0 | 1 | ... | 9 
 <letter>                :=  a | b | ... | z | A | ... | Z
-<literal>               :=  <integer-literal> | "true" | "false"
+<literal>               :=  <integer-literal> | <real-literal> | "true" | "false"
 <integer-literal>       :=  <digit> <integer-literal> | <digit>
+<real-literal>          :=  <digit><maybe_digit>"."<digit><maybe_digit>
+<string-literal>        :=  """ <available_text><maybe_available_text> """
+<available_text>        :=  <letter> | <digit> | <symbol> | " "
+<maybe_available_text>  :=  <available_text><maybe_available_text> | e
+<maybe_digit>           :=  <digit><maybe_digit> | e
+
+<symbol>                :=  literalmente qualquer caractere que não seja aspas

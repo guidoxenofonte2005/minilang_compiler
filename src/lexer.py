@@ -36,11 +36,10 @@ class Lexer:
             "not": Token(TAGS.NOT.value, "not"),
             "def": Token(TAGS.DEF.value, "def"),
             "print": Token(TAGS.PRINT.value, "print"),
-            "if": Token(TAGS.IF.value, "if"),  
+            "if": Token(TAGS.IF.value, "if"),
             "else": Token(TAGS.ELSE.value, "else"),
             "while": Token(TAGS.WHILE.value, "while"),
             "return": Token(TAGS.RETURN.value, "return"),
-
         }
 
     def get_current_line(self) -> int:
@@ -88,9 +87,9 @@ class Lexer:
             return Token(TAGS.INTEGER.value, digit_string)
 
         # identifiers
-        if self.peek().isalnum():
+        if self.peek().isalpha() or self.peek() == "_":
             identifier_string: str = ""
-            while self.peek() and self.peek().isalnum():
+            while self.peek() and (self.peek().isalnum() or self.peek() == "_"):
                 identifier_string += self._advance_position()
 
             if identifier_string in self._reserved_table:
@@ -102,7 +101,7 @@ class Lexer:
             return return_token
         # strings
         if self.peek() == '"':
-            self._advance_position() 
+            self._advance_position()
 
             string_value = ""
 
@@ -110,10 +109,10 @@ class Lexer:
                 string_value += self._advance_position()
 
             if self.peek() != '"':
-                #detecta o erro lexico
+                # detecta o erro lexico
                 raise Exception(f"String não fechada na linha {self._current_line}")
 
-            self._advance_position()  
+            self._advance_position()
 
             return Token(TAGS.STRING.value, string_value)
         # operators
@@ -123,21 +122,24 @@ class Lexer:
             and (self._current_position + 1 < len(self._source_code))
             and self._source_code[self._current_position + 1] == "="
         ):
-            for i in range(2): self._advance_position()
+            for i in range(2):
+                self._advance_position()
             return Token(TAGS.LESSER_EQUAL.value, "<=")
         if (
             (current_char == ">")
             and (self._current_position + 1 < len(self._source_code))
             and self._source_code[self._current_position + 1] == "="
         ):
-            for i in range(2): self._advance_position()
+            for i in range(2):
+                self._advance_position()
             return Token(TAGS.GREATER_EQUAL.value, ">=")
         if (
             (current_char == "=")
             and (self._current_position + 1 < len(self._source_code))
             and self._source_code[self._current_position + 1] == "="
         ):
-            for i in range(2): self._advance_position()
+            for i in range(2):
+                self._advance_position()
             return Token(TAGS.EQUAL.value, "==")
         if current_char:
             self._advance_position()
