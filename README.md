@@ -1,6 +1,6 @@
 # COMPILADOR MINILANG
 ### Etapas:
-- [ ] Conclusão da Gramática EBNF
+- [X] Conclusão da Gramática EBNF
     - Falta pegar o novo arquivo de gramática no último post do professor sobre o projeto
 - [ ] Conclusão do Lexer
     - Implementação de todas as estruturas da gramática necessárias
