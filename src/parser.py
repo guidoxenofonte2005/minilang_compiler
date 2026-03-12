@@ -27,7 +27,7 @@ class Parser:
     def program(self):
         """
         ### REGRA:
-        program := \{ statements \}
+        program := statements
         """
         return self.statements()
 
@@ -54,6 +54,7 @@ class Parser:
                     | block
         """
         if self.lookahead.tag == TAGS.VAR:
+            # var <identifier> : <type> = <expression>;
             left_hand_expr: Identifier = self.identifier()
             if not self.match_tag(ord("=")):
                 raise ParseError(
@@ -71,6 +72,34 @@ class Parser:
                 )
 
             return statement
+        if self.lookahead.tag == TAGS.SET:
+            # set <identifier> = <expression>;
+            pass
+        if self.lookahead.tag == TAGS.PRINT:
+            # print <expression>;
+            pass
+        if self.lookahead.tag == TAGS.IF:
+            # if ( <expression> ) <block> <else-block>
+            # <else-block> := else <block> | e
+            pass
+        if self.lookahead.tag == TAGS.WHILE:
+            # while ( <expression> ) <block>
+            pass
+        if self.lookahead.tag == TAGS.RETURN:
+            # return <expression>
+            pass
+        if self.lookahead.tag == TAGS.DEF:
+            # def <identifier> ( <formal_param_optional> ) : <type> <block>
+            # <formal_param_optional> := <formal_param> <formal_param_list> | e
+            # <formal_param_list> := , <formal_param> <formal_param_list> | e
+            # <formal_param> := <identifier> : <type>
+            pass
+        if self.lookahead.tag == ord("{"):
+            # block = { <statements> }
+            pass
+        else:
+            pass
+
 
     def identifier(self) -> Identifier:
         var_token: Token = self.lookahead
