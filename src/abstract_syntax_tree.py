@@ -9,6 +9,7 @@ class Node:
     # TODO: criar classe Node
     def __init__(self, node_type=NODE_TYPES.UNKNOWN):
         self.node_type: NODE_TYPES = node_type
+        # self.line: int
 
     def ToString(self) -> str:
         return ""
@@ -38,9 +39,10 @@ class StatementSequence(Statement):
 
 
 class VariableDeclaration(Statement):
-    def __init__(self, identifier, expression):
+    def __init__(self, identifier, type, expression):
         super().__init__(NODE_TYPES.ASSIGNMENT)
         self.identifier = identifier
+        self.type = type
         self.expression = expression
 
 
