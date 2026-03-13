@@ -1,6 +1,6 @@
 ### GRAMÁTICA BNF TRADUZIDA A PARTIR DA EBNF
 
-<program>               :=  <statement_group>
+<program>               :=  <statement_group> 
 <block>                 :=  "{" <statement_group> "}"
 <statement_group>       :=  <statement><statement_group> | e  ### passo intermediario para representar a repetição ou nulo
 <statement>             :=  <variable-decl> ";"
@@ -29,14 +29,17 @@
 <variable-decl>         :=  "var" <identifier> ":" <type> "=" <expression>
 <assignment>            :=  "set" <identifier> "=" <expression>
 
-<expression>            :=  <simple-expression> <relational-expression>
-# <relational_expression_list> :=  <relational-op> <simple-expression> <relational_expression_list> | e ### passo intermediario para representar a repetição ou nulo
-<relational-expression> :=  <relational-op> <simple-expression> | e ### faltando a recursão ?
+# <expression>            :=  <simple-expression> <relational-expression>
+<expression>            :=  <simple-expression> <relational-expression-list>
+#<relational-expression> :=  <relational-op> <simple-expression> | e ### faltando a recursão ?
+<relational_expression_list> :=  <relational-op> <simple-expression> <relational_expression_list> | e ### passo intermediario para representar a repetição ou nulo
+
 <simple-expression>     :=  <term> <sum-simple-expression>
 <sum-simple-expression> :=  <additive-op> <term> <sum-simple-expression> | e
+
 <term>                  :=  <factor> <multiplicative-expr>
-#<term_list>            :=  <multiplicative-op> <factor> <term_list> | e ### passo intermediario para representar a repetição ou nulo
-<multiplicative-expr>   :=  <multiplicative-op> <factor> | e
+<multiplicative-expr>   :=  <multiplicative-op> <factor> <multiplicative-expr> | e
+
 
 <factor>                :=  <literal>
                         |   <identifier>

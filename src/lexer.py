@@ -88,18 +88,19 @@ class Lexer:
             return Token(TAGS.INTEGER.value, digit_string)
 
         # identifiers
-        if self.peek().isalnum():
-            identifier_string: str = ""
-            while self.peek() and self.peek().isalnum():
+        if self.peek().isalpha() or self.peek() == "_":
+            identifier_string = ""
+
+            while self.peek() and (self.peek().isalnum() or self.peek() == "_"):
                 identifier_string += self._advance_position()
 
             if identifier_string in self._reserved_table:
                 return self._reserved_table[identifier_string]
 
-            return_token: Token = Token(TAGS.IDENTIFIER.value, identifier_string)
-            self.token_table[identifier_string] = return_token
+            token = Token(TAGS.IDENTIFIER.value, identifier_string)
+            self.token_table[identifier_string] = token
 
-            return return_token
+            return token
         # strings
         if self.peek() == '"':
             self._advance_position() 
