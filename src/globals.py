@@ -57,9 +57,20 @@ class NODE_TYPES(Enum):
     STATEMENT = 2
     EXPRESSION = 3
     STATEMENTS = 4
-    ASSIGNMENT = 5
-    IDENTIFIER = 6
-    LOGICAL = 7
+    VAR_DECLARATION = 5
+    ASSIGNMENT = 6
+    IF_STATEMENT = 7
+    WHILE_STATEMENT = 8
+    RETURN_STATEMENT = 9
+    FUNCTION_DECLARATION = 10
+
+    IDENTIFIER = 11
+    LITERAL = 12
+    BINARY_EXPR = 13
+    UNARY_EXPR = 14
+    FUNCTION_CALL = 15
+
+    FORMAL_PARAMS = 16
 
 
 global_lexer: "Lexer" = None ### ajuste para evitar circular import
