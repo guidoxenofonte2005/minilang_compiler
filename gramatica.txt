@@ -43,15 +43,16 @@
 
 <factor>                :=  <literal>
                         |   <identifier>
-                        |   <function-call>
                         |   <sub-expression>
                         |   <unary>
+
+<factor_tail>           :=  "(" <actual-params> ")" | e
 
 <unary>                 :=  <operation> <unary-expression>
 <operation>             :=  "+" | "-" | "not"
 <unary-expression>      :=  <expression> <unary-expression> | e
 <sub-expression>        :=  "(" <expression> ")"
-<function-call>         :=  <identifier> "(" <actual-params> ")"
+#<function-call>         :=  <identifier> "(" <actual-params> ")"
 <actual-params>         :=  <expression> <maybe-expression> | e ### |e torna opcional para representar o [X] 
 <maybe-expression>      :=  "," <expression> <maybe-expression> | e ### representa a repetição ou nulo para representar o {, X}
 
