@@ -7,7 +7,7 @@ class Token:
         self.value: any = tokenValue
 
     def __repr__(self):
-        return f"<{self.tag}, {self.value}>" if self.value != "" else f"<{self.tag}>"
+        return f"< {self.tag}, {self.value} >" if self.value != "" else f"<{self.tag}>"
 
 
 class Lexer:
@@ -21,7 +21,6 @@ class Lexer:
         self._init_reserved_table()
 
     def _init_reserved_table(self):
-        # TODO: terminar tabela de palavras reservadas
         self._reserved_table = {
             "var": Token(TAGS.VAR.value, "var"),
             "set": Token(TAGS.SET.value, "set"),
@@ -46,9 +45,11 @@ class Lexer:
     def get_current_line(self) -> int:
         return self._current_line
 
+
     def peek(self, index_advance: int = 0) -> str:
-        if self._current_position < len(self._source_code):
-            return self._source_code[self._current_position + index_advance]
+        pos = self._current_position + index_advance
+        if pos < len(self._source_code):
+            return self._source_code[pos]
         return ""
 
     def _advance_position(self) -> None:
@@ -59,6 +60,8 @@ class Lexer:
 
         if char == "\n":
             self._current_line += 1
+            
+            
 
         return char
 
@@ -66,7 +69,7 @@ class Lexer:
         if not self.peek():
             return Token(0)
 
-        while self.peek().isspace():
+        while self.peek() and self.peek().isspace():
             self._advance_position()
 
         # numbers
@@ -76,6 +79,7 @@ class Lexer:
 
             while self.peek() and (self.peek().isdigit() or self.peek() == "."):
                 current_char: str = self._advance_position()
+               
                 if current_char == ".":
                     if is_decimal:
                         # TODO: criar exception específica depois
@@ -118,29 +122,90 @@ class Lexer:
 
             return Token(TAGS.STRING.value, string_value)
         # operators
-        current_char: str = self.peek()
-        if (
-            (current_char == "<")
-            and (self._current_position + 1 < len(self._source_code))
-            and self._source_code[self._current_position + 1] == "="
-        ):
-            for i in range(2): self._advance_position()
-            return Token(TAGS.LESSER_EQUAL.value, "<=")
-        if (
-            (current_char == ">")
-            and (self._current_position + 1 < len(self._source_code))
-            and self._source_code[self._current_position + 1] == "="
-        ):
-            for i in range(2): self._advance_position()
-            return Token(TAGS.GREATER_EQUAL.value, ">=")
-        if (
-            (current_char == "=")
-            and (self._current_position + 1 < len(self._source_code))
-            and self._source_code[self._current_position + 1] == "="
-        ):
-            for i in range(2): self._advance_position()
-            return Token(TAGS.EQUAL.value, "==")
-        if current_char:
+        current_char = self.peek()
+        next_char = self.peek(1)
+
+        # ===== operadores compostos =====
+        if current_char == "<" and next_char == "=":
             self._advance_position()
-            return Token(ord(current_char), current_char)
-        return Token(0)
+            self._advance_position()
+            return Token(TAGS.LESSER_EQUAL.value, "<=")
+
+        if current_char == ">" and next_char == "=":
+            self._advance_position()
+            self._advance_position()
+            return Token(TAGS.GREATER_EQUAL.value, ">=")
+
+        if current_char == "=" and next_char == "=":
+            self._advance_position()
+            self._advance_position()
+            return Token(TAGS.EQUAL.value, "==")
+
+        if current_char == "!" and next_char == "=":
+            self._advance_position()
+            self._advance_position()
+            return Token(TAGS.NOT_EQUAL.value, "!=")
+
+        # ===== operadores simples =====
+        if current_char == "+":
+            self._advance_position()
+            return Token(TAGS.PLUS.value, "+")
+
+        if current_char == "-":
+            self._advance_position()
+            return Token(TAGS.MINUS.value, "-")
+
+        if current_char == "*":
+            self._advance_position()
+            return Token(TAGS.MULT.value, "*")
+
+        if current_char == "/":
+            self._advance_position()
+            return Token(TAGS.DIV.value, "/")
+
+        if current_char == "<":
+            self._advance_position()
+            return Token(TAGS.LESSER.value, "<")
+
+        if current_char == ">":
+            self._advance_position()
+            return Token(TAGS.GREATER.value, ">")
+
+        if current_char == "=":
+            self._advance_position()
+            return Token(TAGS.ASSIGN.value, "=")
+
+        # ===== delimitadores =====
+        if current_char == "(":
+            self._advance_position()
+            return Token(TAGS.LPAREN.value, "(")
+
+        if current_char == ")":
+            self._advance_position()
+            return Token(TAGS.RPAREN.value, ")")
+
+        if current_char == "{":
+            self._advance_position()
+            return Token(TAGS.LBRACE.value, "{")
+
+        if current_char == "}":
+            self._advance_position()
+            return Token(TAGS.RBRACE.value, "}")
+
+        if current_char == ",":
+            self._advance_position()
+            return Token(TAGS.COMMA.value, ",")
+
+        if current_char == ";":
+            self._advance_position()
+            return Token(TAGS.SEMICOLON.value, ";")
+
+        if current_char == ":":
+            self._advance_position()
+            return Token(TAGS.COLON.value, ":")
+        
+        # detecta caractere inválido
+        invalid_char = self._advance_position()
+        raise Exception(f"Caractere inválido '{invalid_char}' na linha {self._current_line}")
+                
+        

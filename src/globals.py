@@ -2,7 +2,6 @@ from enum import Enum
 
 import lexer
 
-
 class TAGS(Enum):
     IDENTIFIER = 256
 
@@ -21,34 +20,47 @@ class TAGS(Enum):
     # basic functions
     PRINT = 264
     DEF = 265
-   
 
-    FUNCTION_CALL = 266
-    ADDITIVE_OP = 267
-    MULTIPLICATIVE_OP = 268
-    RELATIONAL_OP = 269
+    # logical
+    AND = 266
+    OR = 267
+    NOT = 268
 
-    AND = 270
-    OR = 271
-    NOT = 272
+    # relational
+    GREATER_EQUAL = 269   # >=
+    LESSER_EQUAL = 270    # <=
+    GREATER = 271         # >
+    LESSER = 272          # <
+    EQUAL = 273           # ==
+    NOT_EQUAL = 274       # !=
 
-    GREATER_EQUAL = 273
-    LESSER_EQUAL = 274
-    GREATER = 275
-    LESSER = 276
-    EQUAL = 277
-    NOT_EQUAL = 278
-    
-    #more basic functions
-    IF= 279
-    ELSE = 280
-    WHILE = 281
-    RETURN = 282
-    
-    #strings opcional
-    STRING= 283
-    
-   
+    # arithmetic
+    PLUS = 275            # +
+    MINUS = 276           # -
+    MULT = 277            # *
+    DIV = 278             # /
+
+    # assignment
+    ASSIGN = 279          # =
+
+    # control flow
+    IF = 280
+    ELSE = 281
+    WHILE = 282
+    RETURN = 283
+
+    # delimiters
+    LPAREN = 284
+    RPAREN = 285
+    LBRACE = 286
+    RBRACE = 287
+    COMMA = 288
+    SEMICOLON = 289
+    COLON = 290
+
+    # string
+    STRING = 291
+    EOF = 999
     
 
 
