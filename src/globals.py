@@ -118,3 +118,4 @@ MUL_OPS = {
 
 
 global_lexer: "Lexer" = None ### ajuste para evitar circular import
+global_parser: "Parser" = None

@@ -2,11 +2,14 @@ import sys
 
 from lexer import Lexer
 import globals
+from parser import Parser
 
 class Compiler:
     def __init__(self, fileName: str) -> None:
         with open(fileName) as file:
             globals.global_lexer = Lexer(file)
+            globals.global_parser = Parser().start()
+            globals.global_parser.Generate()
 
 
 if __name__ == "__main__":
