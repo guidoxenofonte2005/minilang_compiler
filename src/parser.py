@@ -1,8 +1,7 @@
 from errors.parse_error import ParseError
 from lexer import Token
-from globals import global_lexer, TAGS
+from globals import TAGS
 from abstract_syntax_tree import *
-
 
 REL_OPS = {
     TAGS.LESSER.value,
@@ -27,27 +26,29 @@ MUL_OPS = {
 
 
 class Parser:
-    def __init__(self):
-        self.lookahead: Token = None
-
+    def __init__(self, lexer):
+        self.lexer = lexer
+        self.lookahead: Token = self.lexer.scan_file()
+        
     def get_current_line(self):
-        return global_lexer.get_current_line()
+        return self.lexer.get_current_line()
 
     def start(self):
-        self.lookahead = global_lexer.scan_file()
         return self.program()
 
     def match_tag(self, tag):
         if self.lookahead.tag != tag:
             raise ParseError(
-                f"Esperado {tag}, encontrado {self.lookahead.tag} na linha {self.get_current_line()}"
+                f"Esperado {tag}, encontrado {self.lookahead.tag} "
+                f"('{self.lookahead.value}') na linha {self.lexer.get_current_line()}"
             )
-        self.lookahead = global_lexer.scan_file()
+        self.lookahead = self.lexer.scan_file()
 
     # ================= PROGRAM =================
 
     def program(self):
-        return self.statements_group()
+        statements = self.statements_group()
+        return Block(statements)
 
     def block(self):
         self.match_tag(TAGS.LBRACE.value)
@@ -219,7 +220,7 @@ class Parser:
 
         expr = self.expression()
 
-        return VariableDecl(identifier, type_token, expr)
+        return VariableDeclaration(identifier, type_token, expr)
 
     def assignment(self):
         self.match_tag(TAGS.SET.value)
@@ -314,7 +315,7 @@ class Parser:
             TAGS.LPAREN.value,
             TAGS.PLUS.value,
             TAGS.MINUS.value,
-            TAGS.NOT.value,
+            
         ):
             params.append(self.expression())
 

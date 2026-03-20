@@ -64,14 +64,34 @@ class TAGS(Enum):
     
 
 
+from enum import Enum
+
 class NODE_TYPES(Enum):
     UNKNOWN = 1
+
+    # base
     STATEMENT = 2
     EXPRESSION = 3
-    STATEMENTS = 4
-    ASSIGNMENT = 5
-    IDENTIFIER = 6
-    LOGICAL = 7
 
+    # estrutura
+    BLOCK = 4
+
+    # statements
+    VARIABLE_DECL = 5
+    ASSIGNMENT = 6
+    PRINT = 7
+    RETURN = 8
+    IF = 9
+    WHILE = 10
+    FUNCTION_DECL = 11
+
+    # expressions
+    IDENTIFIER = 12
+    LITERAL = 13
+    BINARY = 14
+    FUNCTION_CALL = 15
+
+    # params
+    FORMAL_PARAM = 16
 
 global_lexer: "Lexer" = None ### ajuste para evitar circular import
