@@ -268,7 +268,7 @@ class Parser:
         tag = self.lookahead.tag
 
         # literal
-        if tag in (TAGS.INTEGER.value,TAGS.TRUE.value, TAGS.FALSE.value):
+        if tag in (TAGS.INTEGER.value,TAGS.TRUE.value, TAGS.FALSE.value,TAGS.STRING.value):
             token = self.lookahead
             self.match_tag(tag)
             return Literal(token)
@@ -293,12 +293,12 @@ class Parser:
             return expr
 
         # unary
-        #muito estranho na gramatica irei esperar
-        # if tag in (TAGS.PLUS.value, TAGS.MINUS.value, TAGS.NOT.value):
-        #     op = self.lookahead
-        #     self.match_tag(tag)
-        #     expr = self.factor()
-        #     return UnaryExpr(op, expr)
+        # muito estranho na gramatica irei esperar
+        if tag in (TAGS.PLUS.value, TAGS.MINUS.value, TAGS.NOT.value):
+            op = self.lookahead
+            self.match_tag(tag)
+            expr = self.factor()
+            return UnaryExpr(op, expr)
 
         raise ParseError(f"Factor inválido na linha {self.get_current_line()}")
 
