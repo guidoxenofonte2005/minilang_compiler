@@ -14,6 +14,9 @@ class Node:
     def to_string(self, level=0):
         return "  " * level + f"{self.__class__.__name__}"
 
+    def Generate(self):
+        pass
+
 
 class Statement(Node):
     def __init__(self, node_type=NODE_TYPES.STATEMENT):

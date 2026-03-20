@@ -1,35 +1,14 @@
 from errors.parse_error import ParseError
 from lexer import Token
-from globals import TAGS
+from globals import TAGS, REL_OPS, MUL_OPS, ADD_OPS
 from abstract_syntax_tree import *
-
-REL_OPS = {
-    TAGS.LESSER.value,
-    TAGS.GREATER.value,
-    TAGS.LESSER_EQUAL.value,
-    TAGS.GREATER_EQUAL.value,
-    TAGS.EQUAL.value,
-    TAGS.NOT_EQUAL.value,
-}
-
-ADD_OPS = {
-    TAGS.PLUS.value,
-    TAGS.MINUS.value,
-    TAGS.OR.value,
-}
-
-MUL_OPS = {
-    TAGS.MULT.value,
-    TAGS.DIV.value,
-    TAGS.AND.value,
-}
 
 
 class Parser:
     def __init__(self, lexer):
         self.lexer = lexer
         self.lookahead: Token = self.lexer.scan_file()
-        
+
     def get_current_line(self):
         return self.lexer.get_current_line()
 
@@ -111,9 +90,7 @@ class Parser:
             return self.block()
 
         else:
-            raise ParseError(
-                f"Statement inválido na linha {self.get_current_line()}"
-            )
+            raise ParseError(f"Statement inválido na linha {self.get_current_line()}")
 
     # ================= FUNCTION =================
 
@@ -144,7 +121,7 @@ class Parser:
         return []
 
     def formal_param_list(self):
-        params = [self.formal_param()] ## existir o formal params inicial
+        params = [self.formal_param()]  ## existir o formal params inicial
 
         while self.lookahead.tag == TAGS.COMMA.value:
             self.match_tag(TAGS.COMMA.value)
@@ -238,7 +215,9 @@ class Parser:
             op = self.lookahead
             self.match_tag(op.tag)
             right = self.simple_expression()
-            return BinaryExpr(left, op, right) ## representa sum-simple-expression rel-op sum-simple-expression
+            return BinaryExpr(
+                left, op, right
+            )  ## representa sum-simple-expression rel-op sum-simple-expression
 
         return left
 
@@ -249,7 +228,7 @@ class Parser:
             op = self.lookahead
             self.match_tag(op.tag)
             right = self.term()
-            left = BinaryExpr(left, op, right) ## representa sum-simple-expression
+            left = BinaryExpr(left, op, right)  ## representa sum-simple-expression
 
         return left
 
@@ -260,7 +239,7 @@ class Parser:
             op = self.lookahead
             self.match_tag(op.tag)
             right = self.factor()
-            left = BinaryExpr(left, op, right) ## representa multiplicative-expr
+            left = BinaryExpr(left, op, right)  ## representa multiplicative-expr
 
         return left
 
@@ -268,7 +247,12 @@ class Parser:
         tag = self.lookahead.tag
 
         # literal
-        if tag in (TAGS.INTEGER.value,TAGS.TRUE.value, TAGS.FALSE.value,TAGS.STRING.value):
+        if tag in (
+            TAGS.INTEGER.value,
+            TAGS.TRUE.value,
+            TAGS.FALSE.value,
+            TAGS.STRING.value,
+        ):
             token = self.lookahead
             self.match_tag(tag)
             return Literal(token)
@@ -284,7 +268,7 @@ class Parser:
                 return FunctionCall(identifier, params)
 
             return identifier
-        #sub-expression
+        # sub-expression
         # (expr)
         if tag == TAGS.LPAREN.value:
             self.match_tag(TAGS.LPAREN.value)
@@ -315,7 +299,6 @@ class Parser:
             TAGS.LPAREN.value,
             TAGS.PLUS.value,
             TAGS.MINUS.value,
-            
         ):
             params.append(self.expression())
 

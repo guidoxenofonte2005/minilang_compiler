@@ -94,4 +94,27 @@ class NODE_TYPES(Enum):
     # params
     FORMAL_PARAM = 16
 
+
+REL_OPS = {
+    TAGS.LESSER.value,
+    TAGS.GREATER.value,
+    TAGS.LESSER_EQUAL.value,
+    TAGS.GREATER_EQUAL.value,
+    TAGS.EQUAL.value,
+    TAGS.NOT_EQUAL.value,
+}
+
+ADD_OPS = {
+    TAGS.PLUS.value,
+    TAGS.MINUS.value,
+    TAGS.OR.value,
+}
+
+MUL_OPS = {
+    TAGS.MULT.value,
+    TAGS.DIV.value,
+    TAGS.AND.value,
+}
+
+
 global_lexer: "Lexer" = None ### ajuste para evitar circular import
