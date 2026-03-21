@@ -8,8 +8,11 @@ class Compiler:
     def __init__(self, fileName: str) -> None:
         with open(fileName) as file:
             globals.global_lexer = Lexer(file)
-            globals.global_parser = Parser().start()
-            globals.global_parser.Generate()
+            globals.global_parser = Parser(globals.global_lexer).start()
+            finalCode = globals.global_parser.Generate()
+
+            with open("compiled_exit.py", "w") as exitFile:
+                exitFile.write(finalCode)
 
 
 if __name__ == "__main__":
