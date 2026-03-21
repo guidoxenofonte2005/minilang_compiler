@@ -3,11 +3,14 @@ from lexer import Token
 from globals import TAGS, REL_OPS, MUL_OPS, ADD_OPS
 from abstract_syntax_tree import *
 
+from symtable import SymTable
+
 
 class Parser:
     def __init__(self, lexer):
         self.lexer = lexer
         self.lookahead: Token = self.lexer.scan_file()
+        self._symbol_table = SymTable()
 
     def get_current_line(self):
         return self.lexer.get_current_line()
@@ -31,8 +34,15 @@ class Parser:
 
     def block(self):
         self.match_tag(TAGS.LBRACE.value)
+
+        savedTable = self._symbol_table
+        self._symbol_table = SymTable(previousScope=savedTable)
+
         stmts = self.statements_group()
         self.match_tag(TAGS.RBRACE.value)
+
+        self._symbol_table = savedTable
+
         return Block(stmts)
 
     def statements_group(self):
