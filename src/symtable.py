@@ -1,7 +1,9 @@
 class Symbol:
-  def __init__(self, variable, type):
-    self.variable = variable
-    self.type = type
+    def __init__(self, name, type, params=None, return_type=None):
+        self.name = name
+        self.type = type              # "var" ou "function"
+        self.params = params or []    # lista de tipos
+        self.return_type = return_type
 
 class SymTable:
   def __init__(self, previousScope=None):

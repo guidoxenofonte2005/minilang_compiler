@@ -3,12 +3,21 @@ import sys
 from lexer import Lexer
 import globals
 from parser import Parser
+from semantic_analyzer import SemanticAnalyzer
 
 class Compiler:
     def __init__(self, fileName: str) -> None:
         with open(fileName) as file:
             globals.global_lexer = Lexer(file)
-            globals.global_parser = Parser(globals.global_lexer).start()
+            globals.global_parser = Parser(globals.global_lexer)
+
+            ast = globals.global_parser.start()
+
+            print(ast.to_string())
+
+            globals.global_semantic_analyzer = SemanticAnalyzer()
+            globals.global_semantic_analyzer.analyze(ast)
+            
             finalCode = globals.global_parser.Generate()
 
             with open("compiled_exit.py", "w") as exitFile:

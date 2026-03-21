@@ -182,6 +182,22 @@ class BinaryExpr(Expression):
         return f"{leftHandCode} {operation} {rightHandCode}"
 
 
+class UnaryExpr(Expression):
+    def __init__(self, op, expr):
+        super().__init__(op, NODE_TYPES.EXPRESSION)
+        self.expr = expr
+
+    def to_string(self, level=0):
+        return (
+            "  " * level
+            + f"Unary({self.token.value})\n"
+            + self.expr.to_string(level + 1)
+        )
+
+    def Generate(self, level=0):
+        return f"{self.token.value}{self.expr.Generate()}"
+
+
 class FunctionCall(Expression):
     def __init__(self, identifier, params: List[Expression]):
         super().__init__(identifier.token, NODE_TYPES.FUNCTION_CALL)

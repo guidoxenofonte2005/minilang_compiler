@@ -220,14 +220,16 @@ class Parser:
 
     def expression(self):
         left = self.simple_expression()
+        return self._relational_expression_list(left)
 
+    def _relational_expression_list(self, left):
         if self.lookahead.tag in REL_OPS:
             op = self.lookahead
             self.match_tag(op.tag)
             right = self.simple_expression()
-            return BinaryExpr(
-                left, op, right
-            )  ## representa sum-simple-expression rel-op sum-simple-expression
+
+            new_left = BinaryExpr(left, op, right)
+            return self._relational_expression_list(new_left)
 
         return left
 
