@@ -1,12 +1,20 @@
 # COMPILADOR MINILANG
 ### Etapas:
-- [ ] Conclusão da Gramática EBNF
+- [X] Conclusão da Gramática EBNF
     - Falta pegar o novo arquivo de gramática no último post do professor sobre o projeto
-- [ ] Conclusão do Lexer
+- [X] Conclusão do Lexer
     - Implementação de todas as estruturas da gramática necessárias
-- [ ] Conclusão do Parser
-- [ ] Implementação da AST
+- [X] Conclusão do Parser
+- [X] Implementação da AST
     - Alguns poucos nós já estão criados, mas falta a maioria
-- [ ] Criação do gerador de código
-- [ ] \(<sub>optional</sub>\) Criação de testes para cada parte do código
-- [ ] \(<sub>optional</sub>\) Criação de erros customizados
+- [X] Criação do gerador de código
+- [X] \(<sub>optional</sub>\) Criação de testes para cada parte do código
+- [X] \(<sub>optional</sub>\) Criação de erros customizados
+
+
+
+## Como rodar 
+- coloque o codigo desejado em codigo_test.mini
+- use o comando python src/compiler.py test/codigo_teste.mini
+- o resultado aparecera em test/result/codigo_teste_exit.py
+- para rodar use python test/results/codigo_teste_exit.py
