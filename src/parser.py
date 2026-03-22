@@ -289,7 +289,6 @@ class Parser:
             return expr
 
         # unary
-        # muito estranho na gramatica irei esperar
         if tag in (TAGS.PLUS.value, TAGS.MINUS.value, TAGS.NOT.value):
             op = self.lookahead
             self.match_tag(tag)

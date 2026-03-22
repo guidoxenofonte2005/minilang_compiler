@@ -48,9 +48,9 @@
 
 <factor_tail>           :=  "(" <actual-params> ")" | e
 
-<unary>                 :=  <operation> <unary-expression>
+<unary>                 :=  <operation> <expression>
 <operation>             :=  "+" | "-" | "not"
-<unary-expression>      :=  <expression> <unary-expression> | e
+#<unary-expression>      :=  <expression> <unary-expression> | e
 <sub-expression>        :=  "(" <expression> ")"
 
 #<function-call>         :=  <identifier> "(" <actual-params> ")"
