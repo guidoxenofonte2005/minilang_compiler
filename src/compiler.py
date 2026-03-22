@@ -18,7 +18,7 @@ class Compiler:
             globals.global_semantic_analyzer = SemanticAnalyzer()
             globals.global_semantic_analyzer.analyze(ast)
             
-            finalCode = globals.global_parser.Generate()
+            finalCode = ast.Generate()
 
             with open("compiled_exit.py", "w") as exitFile:
                 exitFile.write(finalCode)
