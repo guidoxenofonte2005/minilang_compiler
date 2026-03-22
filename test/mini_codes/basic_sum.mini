@@ -1,0 +1,7 @@
+var a : int = 10;
+var b : int = 20;
+var resultado : int = 0;
+
+set resultado = a + b;
+
+print resultado;

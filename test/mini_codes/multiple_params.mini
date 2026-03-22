@@ -1,0 +1,9 @@
+def calcular(a : int, b : int, c : int) : int {
+    return a + b * c;
+}
+
+var resultado : int = 0;
+
+set resultado = calcular(2, 3, 4);
+
+print resultado;

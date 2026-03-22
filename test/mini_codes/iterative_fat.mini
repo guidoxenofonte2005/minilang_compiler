@@ -1,0 +1,9 @@
+var n : int = 5;
+var resultado : int = 1;
+
+while (n > 1) {
+    set resultado = resultado * n;
+    set n = n - 1;
+}
+
+print resultado;

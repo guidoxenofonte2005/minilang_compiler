@@ -1,5 +1,5 @@
 import sys
-
+import os
 from lexer import Lexer
 import globals
 from parser import Parser
@@ -20,7 +20,11 @@ class Compiler:
             
             finalCode = ast.Generate()
 
-            with open("compiled_exit.py", "w") as exitFile:
+            base_name = os.path.basename(fileName).replace(".mini", "")
+
+            output_path = f"test/results/{base_name}_exit.py"
+
+            with open(output_path, "w") as exitFile:
                 exitFile.write(finalCode)
 
 

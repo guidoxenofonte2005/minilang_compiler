@@ -1,0 +1,10 @@
+var x : int = 10;
+var y : int = 20;
+
+if (x < y) {
+    print "x menor que y";
+}
+
+if (x == y) {
+    print "iguais";
+}

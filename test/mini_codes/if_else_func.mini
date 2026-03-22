@@ -1,0 +1,12 @@
+def maior(a : int, b : int) : int {
+    if (a > b) {
+        return a;
+    }
+    return b;
+}
+
+var resultado : int = 0;
+
+set resultado = maior(10, 25);
+
+print resultado;
